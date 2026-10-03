@@ -1,0 +1,767 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kerala PSC Mock Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=Noto+Sans+Malayalam:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF2EE; --surface:#FFFFFF; --ink:#15271E; --muted:#5B6B62; --line:#D3DED6;
+  --green:#1B6B47; --green-d:#124A31; --green-l:#E3F1E8;
+  --gold:#C8961B; --gold-l:#F6E9BF;
+  --red:#B23B2E; --red-l:#F8E4E1; --ok:#1E7B4B;
+  --radius:10px;
+  --font:'Hanken Grotesk','Noto Sans Malayalam',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --display:'Bricolage Grotesque','Hanken Grotesk','Noto Sans Malayalam',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+
+/* header: kasavu border */
+header{background:var(--green-d);color:#fff;position:sticky;top:0;z-index:20}
+header::after{content:"";display:block;height:6px;background:repeating-linear-gradient(90deg,var(--gold) 0 18px,var(--green-d) 18px 22px,var(--gold) 22px 26px,var(--green-d) 26px 30px)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 0}
+.brand{font-family:var(--display);font-weight:800;font-size:1.35rem;letter-spacing:-.01em;margin:0}
+.brand small{display:block;font-family:var(--font);font-weight:500;font-size:.78rem;opacity:.75;letter-spacing:0}
+nav{display:flex;gap:4px}
+nav button{background:transparent;border:0;color:#fff;opacity:.78;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+nav button:hover{opacity:1;background:rgba(255,255,255,.1)}
+nav button.on{opacity:1;background:#fff;color:var(--green-d)}
+.badge{display:inline-block;min-width:1.5em;padding:0 6px;margin-left:6px;border-radius:99px;background:var(--gold);color:#241a00;font-size:.75rem;font-weight:700;text-align:center}
+
+main{padding:24px 0 64px}
+.view{display:none}.view.on{display:block}
+h2{font-family:var(--display);font-size:1.6rem;margin:0 0 4px;letter-spacing:-.01em}
+h3{font-family:var(--display);font-size:1.1rem;margin:0 0 10px}
+.lead{color:var(--muted);margin:0 0 20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>.f{flex:1 1 180px}
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:4px}
+input[type=text],input[type=number],select,textarea{width:100%;padding:10px 12px;border:1px solid #B9C7BE;border-radius:8px;background:#fff}
+textarea{resize:vertical;min-height:90px}
+.hint{color:var(--muted);font-size:.85rem;margin:4px 0 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:8px;border:1px solid var(--green);background:var(--green);color:#fff;font-weight:600;cursor:pointer;min-height:42px}
+.btn:hover{background:var(--green-d)}
+.btn.alt{background:#fff;color:var(--green-d)}
+.btn.alt:hover{background:var(--green-l)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#241a00}
+.btn.gold:hover{filter:brightness(.95)}
+.btn.danger{background:#fff;border-color:var(--red);color:var(--red)}
+.btn.danger:hover{background:var(--red-l)}
+.btn.sm{padding:5px 12px;min-height:32px;font-size:.88rem}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+.sub-tabs{display:flex;gap:0;margin-bottom:16px;border:1px solid var(--green);border-radius:8px;overflow:hidden;width:max-content;max-width:100%}
+.sub-tabs button{border:0;background:#fff;color:var(--green-d);padding:9px 18px;font-weight:600;cursor:pointer}
+.sub-tabs button.on{background:var(--green);color:#fff}
+
+/* setup */
+.hero{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.count{font-family:var(--display);font-weight:800;font-size:3rem;line-height:1;color:var(--green)}
+.count span{display:block;font-family:var(--font);font-size:.9rem;font-weight:500;color:var(--muted);margin-top:4px}
+.empty{text-align:center;padding:32px 16px;color:var(--muted)}
+
+/* quiz */
+.qtop{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:78px;z-index:10;background:var(--bg);padding:8px 0}
+.timer{font-family:var(--display);font-weight:700;font-size:1.3rem;padding:4px 14px;border-radius:8px;background:var(--gold-l);border:1px solid var(--gold);font-variant-numeric:tabular-nums}
+.timer.low{background:var(--red-l);border-color:var(--red);color:var(--red)}
+.qno{font-weight:600;color:var(--muted)}
+.qtext{font-size:1.2rem;font-weight:600;margin:0 0 16px;white-space:pre-wrap}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:12px 14px;margin-bottom:10px;border:1.5px solid var(--line);border-radius:var(--radius);background:#fff;cursor:pointer}
+.opt:hover{border-color:var(--green)}
+.opt .l{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid #B9C7BE;display:grid;place-items:center;font-weight:700;font-size:.9rem}
+.opt.sel{border-color:var(--green);background:var(--green-l)}
+.opt.sel .l{background:var(--green);border-color:var(--green);color:#fff}
+.opt.right{border-color:var(--ok);background:var(--green-l)}
+.opt.right .l{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--red);background:var(--red-l)}
+.opt.wrong .l{background:var(--red);border-color:var(--red);color:#fff}
+.opt{cursor:pointer}.opt.static{cursor:default}
+.palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px}
+.palette button{height:40px;border-radius:8px;border:1.5px solid var(--line);background:#fff;font-weight:600;cursor:pointer}
+.palette button.ans{background:var(--green);border-color:var(--green);color:#fff}
+.palette button.flag{border-color:var(--gold);box-shadow:inset 0 0 0 2px var(--gold)}
+.palette button.cur{outline:3px solid var(--ink);outline-offset:1px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px;border:1.5px solid var(--line)}
+
+/* result */
+.score{font-family:var(--display);font-weight:800;font-size:3.4rem;line-height:1;color:var(--green)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:16px}
+.stat{border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.stat b{display:block;font-family:var(--display);font-size:1.5rem}
+.stat span{color:var(--muted);font-size:.85rem}
+.explain{margin-top:8px;padding:10px 12px;background:var(--gold-l);border-radius:8px;font-size:.92rem}
+
+/* preview / bank */
+.pv{border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:8px;background:#fff}
+.pv p{margin:0 0 6px;font-weight:600}
+.pv ol{margin:0;padding:0;list-style:none;font-size:.95rem}
+.pv li{padding:2px 8px;border-radius:6px}
+.pv li.c{background:var(--green-l);color:var(--green-d);font-weight:600}
+.meta{font-size:.8rem;color:var(--muted);margin-top:6px}
+.msg{border-radius:8px;padding:10px 12px;margin:10px 0;font-size:.92rem}
+.msg.ok{background:var(--green-l);color:var(--green-d)}
+.msg.err{background:var(--red-l);color:var(--red)}
+.msg.err ul{margin:4px 0 0;padding-left:18px}
+.radio-opt{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.radio-opt input[type=radio]{width:20px;height:20px;accent-color:var(--green);flex:none}
+.radio-opt input[type=text]{flex:1}
+details summary{cursor:pointer;font-weight:600;margin:8px 0}
+pre.code{max-height:260px;overflow:auto;background:#F4F7F5;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:.8rem}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:8px;z-index:50;max-width:90vw;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.toast[hidden]{display:none}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.filters>*{flex:1 1 160px}
+.bankrow{display:flex;gap:10px;justify-content:space-between;align-items:flex-start}
+.bankrow .btns{display:flex;gap:6px;flex:none}
+@media (max-width:600px){
+  .qtop{top:112px}
+  nav{width:100%}nav button{flex:1;padding:8px 6px;font-size:.9rem}
+  .qtext{font-size:1.1rem}
+  .count{font-size:2.4rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <h1 class="brand">Kerala PSC Mock Test<small>Practice. Shuffle. Repeat.</small></h1>
+    <nav aria-label="Main">
+      <button data-view="test" class="on">Mock test</button>
+      <button data-view="add">Add questions</button>
+      <button data-view="bank">Question bank<span class="badge" id="navCount">0</span></button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= MOCK TEST ================= -->
+<section id="view-test" class="view on">
+
+  <div id="setup">
+    <div class="card hero">
+      <div class="count"><span id="poolCount" style="display:inline;font-size:inherit;font-family:inherit;color:inherit;font-weight:inherit">0</span><span>questions in your bank</span></div>
+      <div>
+        <h2>Start a mock test</h2>
+        <p class="lead" style="margin:0">Questions and options are shuffled every time you start.</p>
+      </div>
+    </div>
+
+    <div id="emptyBank" class="card empty" hidden>
+      <p><b>Your question bank is empty.</b><br>Add questions first, or try the sample set.</p>
+      <div class="actions" style="justify-content:center">
+        <button class="btn" onclick="showView('add')">Add questions</button>
+        <button class="btn alt" onclick="loadSamples()">Load sample questions</button>
+      </div>
+    </div>
+
+    <div id="setupForm" class="card">
+      <div class="row">
+        <div class="f"><label for="sCat">Category</label><select id="sCat"></select></div>
+        <div class="f"><label for="sNum">Number of questions</label><input type="number" id="sNum" min="1" value="20"><p class="hint" id="sAvail"></p></div>
+        <div class="f"><label for="sMin">Time (minutes)</label><input type="number" id="sMin" min="0" value="15"><p class="hint">0 = no timer</p></div>
+        <div class="f"><label for="sNeg">Negative marking</label>
+          <select id="sNeg"><option value="0">None</option><option value="0.25">¼ mark per wrong answer</option><option value="0.3333333333" selected>⅓ mark per wrong answer</option></select>
+        </div>
+      </div>
+      <label style="display:flex;gap:8px;align-items:center;font-weight:500;margin-top:14px"><input type="checkbox" id="sShufOpt" checked style="width:18px;height:18px;accent-color:var(--green)"> Also shuffle the options (A–D) in each question</label>
+      <div class="actions"><button class="btn gold" id="startBtn" onclick="startTest()">Start test</button></div>
+    </div>
+  </div>
+
+  <div id="quiz" hidden>
+    <div class="qtop">
+      <div class="qno" id="qProgress"></div>
+      <div class="timer" id="timer">--:--</div>
+      <button class="btn danger sm" onclick="submitTest(false)">Submit test</button>
+    </div>
+    <div class="card" id="qCard"></div>
+    <div class="card">
+      <h3>Question palette</h3>
+      <div class="palette" id="palette"></div>
+      <div class="legend"><span><i style="background:var(--green);border-color:var(--green)"></i>Answered</span><span><i style="border-color:var(--gold);box-shadow:inset 0 0 0 2px var(--gold)"></i>Marked for review</span><span><i></i>Not answered</span></div>
+    </div>
+  </div>
+
+  <div id="result" hidden></div>
+</section>
+
+<!-- ================= ADD QUESTIONS ================= -->
+<section id="view-add" class="view">
+  <h2>Add questions</h2>
+  <p class="lead">Paste many at once, or add them one at a time.</p>
+
+  <div class="sub-tabs" role="tablist">
+    <button class="on" data-sub="bulk">Bulk add</button>
+    <button data-sub="single" id="singleTabBtn">One by one</button>
+  </div>
+
+  <!-- Bulk -->
+  <div id="sub-bulk">
+    <div class="card">
+      <label for="bulkText">Paste questions</label>
+      <textarea id="bulkText" style="min-height:260px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem" spellcheck="false" placeholder="1. A straight line that touches a circle at only one point is called:
+A) Chord
+B) Tangent
+C) Secant
+D) Radius
+
+Answer: B) Tangent
+
+2. Capital of Kerala?
+A) Kochi
+B) Thiruvananthapuram
+C) Kozhikode
+D) Thrissur
+Answer: B"></textarea>
+      <p class="hint">Extra spaces and blank lines are fine. Options can be <b>A)</b>, <b>A.</b>, <b>(A)</b> or <b>a)</b>. The answer line can be <b>Answer: B</b> or <b>Answer: B) Tangent</b>. An optional <b>Explanation:</b> line is supported.</p>
+      <div class="row" style="margin-top:12px">
+        <div class="f"><label for="bulkCat">Category for these questions (optional)</label><input type="text" id="bulkCat" list="catList" placeholder="e.g. Maths, Kerala History"></div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="importBtn" onclick="importParsed()" disabled>Import questions</button>
+        <button class="btn alt" onclick="downloadJSON(parsed.questions,'parsed-questions.json')" id="dlParsedBtn" disabled>Download JSON</button>
+        <button class="btn alt" onclick="copyText(JSON.stringify(parsed.questions.map(toExport),null,2))" id="cpParsedBtn" disabled>Copy JSON</button>
+        <button class="btn alt" onclick="document.getElementById('bulkText').value='';parseBulkUI()">Clear</button>
+      </div>
+    </div>
+    <div id="bulkPreview"></div>
+  </div>
+
+  <!-- Single -->
+  <div id="sub-single" hidden>
+    <div class="card">
+      <h3 id="formTitle">New question</h3>
+      <label for="fq">Question</label>
+      <textarea id="fq" placeholder="Type the question"></textarea>
+      <div style="margin-top:14px">
+        <label>Options — tick the correct one</label>
+        <div class="radio-opt"><input type="radio" name="fc" value="0" aria-label="Option A is correct" checked><input type="text" class="fo" placeholder="Option A"></div>
+        <div class="radio-opt"><input type="radio" name="fc" value="1" aria-label="Option B is correct"><input type="text" class="fo" placeholder="Option B"></div>
+        <div class="radio-opt"><input type="radio" name="fc" value="2" aria-label="Option C is correct"><input type="text" class="fo" placeholder="Option C"></div>
+        <div class="radio-opt"><input type="radio" name="fc" value="3" aria-label="Option D is correct"><input type="text" class="fo" placeholder="Option D"></div>
+      </div>
+      <div class="row" style="margin-top:6px">
+        <div class="f"><label for="fcat">Category (optional)</label><input type="text" id="fcat" list="catList" placeholder="e.g. Maths"></div>
+      </div>
+      <div style="margin-top:12px"><label for="fexp">Explanation (optional)</label><input type="text" id="fexp" placeholder="Shown after the test"></div>
+      <div class="actions">
+        <button class="btn" id="saveQBtn" onclick="saveSingle()">Save question</button>
+        <button class="btn alt" id="cancelEditBtn" onclick="resetForm()" hidden>Cancel editing</button>
+      </div>
+    </div>
+  </div>
+  <datalist id="catList"></datalist>
+</section>
+
+<!-- ================= BANK ================= -->
+<section id="view-bank" class="view">
+  <h2>Question bank</h2>
+  <p class="lead">Search, edit, export and import your questions.</p>
+
+  <div class="card">
+    <h3>Export / import JSON</h3>
+    <div class="actions" style="margin-top:0">
+      <button class="btn" onclick="downloadJSON(bank,'kerala-psc-questions.json')">Download all as JSON</button>
+      <button class="btn alt" onclick="copyText(JSON.stringify(bank.map(toExport),null,2))">Copy JSON</button>
+      <label class="btn alt" style="margin:0;cursor:pointer">Import JSON file<input type="file" id="jsonFile" accept=".json,application/json" hidden></label>
+      <button class="btn danger" onclick="clearAll()">Delete all</button>
+    </div>
+    <details>
+      <summary>Or paste JSON to import</summary>
+      <textarea id="jsonPaste" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem" placeholder='[{"question":"…","options":["A","B","C","D"],"answer":"B"}]' spellcheck="false"></textarea>
+      <div class="actions"><button class="btn" onclick="importJSONText(document.getElementById('jsonPaste').value)">Import pasted JSON</button></div>
+    </details>
+    <div id="jsonMsg"></div>
+  </div>
+
+  <div class="filters">
+    <input type="text" id="bSearch" placeholder="Search questions" aria-label="Search questions">
+    <select id="bCat" aria-label="Filter by category"></select>
+  </div>
+  <div id="bankList"></div>
+</section>
+
+</main>
+
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script>
+/* ============ helpers ============ */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LETTERS = 'ABCDEF';
+const LS_KEY = 'keralaPscBank.v1';
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const keyOf = s => String(s).toLowerCase().replace(/\s+/g, ' ').trim();
+
+let bank = [];
+try { bank = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch (e) { bank = []; }
+function save() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(bank)); }
+  catch (e) { toast('Could not save in this browser. Download the JSON to keep your questions.'); }
+}
+let toastTimer;
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.hidden = true, 3200);
+}
+function shuffle(a) {
+  a = a.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function copyText(text) {
+  const done = () => toast('Copied to clipboard');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done));
+  } else fallbackCopy(text, done);
+}
+function fallbackCopy(text, done) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); done(); } catch (e) { toast('Copy failed. Use the download button instead.'); }
+  ta.remove();
+}
+function downloadJSON(list, filename) {
+  const data = JSON.stringify(list.map(toExport), null, 2);
+  try {
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    toast('JSON downloaded');
+  } catch (e) { copyText(data); }
+}
+
+/* ============ data format ============ */
+// Stored: {id, question, options:[text...], answer:index, category, explanation}
+// Exported: {id, question, options:[...], answer:"B", answerText:"...", category, explanation}
+function toExport(q) {
+  return {
+    id: q.id, question: q.question, options: q.options,
+    answer: LETTERS[q.answer], answerText: q.options[q.answer],
+    category: q.category || '', explanation: q.explanation || ''
+  };
+}
+function normalizeImport(o) {
+  if (!o || typeof o !== 'object') return null;
+  const question = String(o.question ?? o.q ?? o.text ?? '').trim();
+  let opts = o.options ?? o.choices ?? o.answers;
+  if (opts && !Array.isArray(opts) && typeof opts === 'object') opts = Object.keys(opts).sort().map(k => opts[k]);
+  if (!Array.isArray(opts)) return null;
+  opts = opts.map(x => String(typeof x === 'object' && x ? (x.text ?? x.value ?? '') : x ?? '').trim());
+  const keep = opts.map((t, i) => ({ t, i })).filter(x => x.t);
+  if (!question || keep.length < 2) return null;
+  let a = o.answer ?? o.correct ?? o.correctAnswer, idx = -1;
+  if (typeof a === 'number') idx = a - 1; // numbers are 1-based (1 = A)
+  else if (typeof a === 'string') {
+    const s = a.trim(), m = s.match(/^\(?([A-Fa-f])\)?$/);
+    if (m) idx = LETTERS.indexOf(m[1].toUpperCase());
+    else idx = opts.findIndex(t => keyOf(t) === keyOf(s));
+  }
+  if (idx < 0 && o.answerText) idx = opts.findIndex(t => keyOf(t) === keyOf(o.answerText));
+  const newIdx = keep.findIndex(x => x.i === idx);
+  if (newIdx < 0) return null;
+  return {
+    id: o.id ? String(o.id) : uid(), question, options: keep.map(x => x.t), answer: newIdx,
+    category: String(o.category ?? o.topic ?? '').trim(), explanation: String(o.explanation ?? '').trim()
+  };
+}
+
+/* ============ bulk text parser ============ */
+const cleanLine = s => s.replace(/[\u00A0\u2000-\u200B\u202F\u3000\uFEFF\t]/g, ' ').replace(/\s+/g, ' ').trim();
+const RE_ANS = /^(?:(?:correct\s+)?(?:answer|ans)\b|ഉത്തരം)\s*[:\-–=.]?\s*(.*)$/i;
+const RE_EXP = /^(?:explanation|exp|reason|വിശദീകരണം)\s*[:\-–=]\s*(.*)$/i;
+const RE_OPT = /^\(?\s*([A-Fa-f])\s*[\).:]\s*(.*)$/;
+const RE_Q = /^(?:q(?:uestion)?\s*\.?\s*)?(\d+)\s*[\).:\-]\s*(.*)$/i;
+
+function parseBulk(text, category) {
+  const questions = [], errors = [];
+  let cur = null, auto = 0;
+  const lines = String(text).replace(/\r/g, '').split('\n').map(cleanLine);
+
+  function finish() {
+    if (!cur) return;
+    const label = 'Question ' + cur.num;
+    const q = cur.q.trim();
+    if (!q) errors.push(label + ': question text is missing');
+    else if (cur.opts.length < 2) errors.push(label + ': needs at least 2 options');
+    else if (!cur.ansRaw) errors.push(label + ': no "Answer:" line found');
+    else {
+      let idx = -1;
+      const raw = cur.ansRaw;
+      let m = raw.match(/^\(?([A-Fa-f])(?:\)|\s*[.:\-]|\s*$)/);
+      if (m) {
+        const L = m[1].toUpperCase();
+        idx = cur.opts.findIndex(o => o.l === L);
+        if (idx < 0) idx = LETTERS.indexOf(L);
+      }
+      if (idx < 0) {
+        m = raw.match(/^\(?([A-Fa-f])\)?\s+(.+)$/);
+        if (m) {
+          const i = cur.opts.findIndex(o => o.l === m[1].toUpperCase());
+          if (i >= 0 && keyOf(cur.opts[i].t) === keyOf(m[2])) idx = i;
+        }
+      }
+      if (idx < 0) idx = cur.opts.findIndex(o => keyOf(o.t) === keyOf(raw));
+      if (idx < 0 || idx >= cur.opts.length) errors.push(label + ': could not match the answer "' + raw + '" to an option');
+      else questions.push({
+        id: uid(), question: q, options: cur.opts.map(o => o.t.trim()), answer: idx,
+        category: category || '', explanation: cur.exp.trim()
+      });
+    }
+    cur = null;
+  }
+  function begin(num, text) { finish(); cur = { num: num || ++auto, q: text, opts: [], ansRaw: '', exp: '' }; if (num) auto = Number(num); }
+
+  for (const line of lines) {
+    if (!line) continue;
+    let m;
+    if (cur && (m = line.match(RE_ANS))) { cur.ansRaw = m[1].trim(); continue; }
+    if (cur && (m = line.match(RE_EXP))) { cur.exp = m[1].trim(); continue; }
+    if (cur && cur.q && (m = line.match(RE_OPT))) { cur.opts.push({ l: m[1].toUpperCase(), t: m[2] }); continue; }
+    if ((m = line.match(RE_Q))) { begin(m[1], m[2]); continue; }
+    if (!cur || cur.ansRaw) { begin(null, line); continue; }  // unnumbered new question
+    if (cur.opts.length) cur.opts[cur.opts.length - 1].t += ' ' + line;
+    else cur.q += (cur.q ? ' ' : '') + line;
+  }
+  finish();
+  return { questions, errors };
+}
+
+/* ============ navigation ============ */
+function showView(v) {
+  $$('.view').forEach(e => e.classList.toggle('on', e.id === 'view-' + v));
+  $$('nav button').forEach(b => b.classList.toggle('on', b.dataset.view === v));
+  if (v === 'bank') renderBank();
+  if (v === 'test') refreshSetup();
+  window.scrollTo(0, 0);
+}
+$$('nav button').forEach(b => b.onclick = () => showView(b.dataset.view));
+function showSub(s) {
+  $$('.sub-tabs button').forEach(b => b.classList.toggle('on', b.dataset.sub === s));
+  $('#sub-bulk').hidden = s !== 'bulk';
+  $('#sub-single').hidden = s !== 'single';
+}
+$$('.sub-tabs button').forEach(b => b.onclick = () => showSub(b.dataset.sub));
+
+/* ============ bulk UI ============ */
+let parsed = { questions: [], errors: [] };
+let parseTimer;
+function parseBulkUI() {
+  const text = $('#bulkText').value;
+  const cat = $('#bulkCat').value.trim();
+  parsed = text.trim() ? parseBulk(text, cat) : { questions: [], errors: [] };
+  const n = parsed.questions.length;
+  $('#importBtn').disabled = !n; $('#dlParsedBtn').disabled = !n; $('#cpParsedBtn').disabled = !n;
+  $('#importBtn').textContent = n ? 'Import ' + n + ' question' + (n > 1 ? 's' : '') : 'Import questions';
+
+  let html = '';
+  if (text.trim()) {
+    html += '<div class="msg ' + (n ? 'ok' : 'err') + '">' + (n ? '<b>' + n + '</b> question' + (n > 1 ? 's' : '') + ' ready to import.' : 'No complete questions found yet.') + '</div>';
+    if (parsed.errors.length) html += '<div class="msg err"><b>' + parsed.errors.length + ' could not be read and will be skipped:</b><ul>' + parsed.errors.map(e => '<li>' + esc(e) + '</li>').join('') + '</ul></div>';
+    html += parsed.questions.slice(0, 50).map((q, i) =>
+      '<div class="pv"><p>' + (i + 1) + '. ' + esc(q.question) + '</p><ol>' +
+      q.options.map((o, j) => '<li class="' + (j === q.answer ? 'c' : '') + '">' + LETTERS[j] + ') ' + esc(o) + (j === q.answer ? '  ✓' : '') + '</li>').join('') +
+      '</ol>' + (q.explanation ? '<div class="meta">Explanation: ' + esc(q.explanation) + '</div>' : '') + '</div>').join('');
+    if (n > 50) html += '<p class="hint">Showing the first 50 of ' + n + '.</p>';
+    if (n) html += '<details><summary>View extracted JSON</summary><pre class="code">' + esc(JSON.stringify(parsed.questions.map(toExport), null, 2)) + '</pre></details>';
+  }
+  $('#bulkPreview').innerHTML = html;
+}
+$('#bulkText').addEventListener('input', () => { clearTimeout(parseTimer); parseTimer = setTimeout(parseBulkUI, 250); });
+$('#bulkCat').addEventListener('input', () => { clearTimeout(parseTimer); parseTimer = setTimeout(parseBulkUI, 250); });
+
+function addToBank(list) {
+  const seen = new Set(bank.map(q => keyOf(q.question)));
+  const ids = new Set(bank.map(q => q.id));
+  let added = 0, dup = 0;
+  for (const q of list) {
+    const k = keyOf(q.question);
+    if (seen.has(k)) { dup++; continue; }
+    if (ids.has(q.id)) q.id = uid();
+    ids.add(q.id); bank.push(q); added++;  // only skip questions already in the bank, not repeats inside the pasted batch
+  }
+  save(); refreshAll();
+  return { added, dup };
+}
+function importParsed() {
+  const { added, dup } = addToBank(parsed.questions);
+  toast(added + ' added' + (dup ? ', ' + dup + ' duplicate' + (dup > 1 ? 's' : '') + ' skipped' : ''));
+  if (added) { $('#bulkText').value = ''; parseBulkUI(); }
+}
+
+/* ============ single add / edit ============ */
+let editingId = null;
+function resetForm() {
+  editingId = null;
+  $('#fq').value = ''; $('#fcat').value = ''; $('#fexp').value = '';
+  $$('.fo').forEach(i => i.value = '');
+  $$('input[name=fc]')[0].checked = true;
+  $('#formTitle').textContent = 'New question';
+  $('#saveQBtn').textContent = 'Save question';
+  $('#cancelEditBtn').hidden = true;
+}
+function saveSingle() {
+  const question = $('#fq').value.trim();
+  const raw = $$('.fo').map(i => i.value.trim());
+  const sel = Number($$('input[name=fc]').find(r => r.checked).value);
+  const keep = raw.map((t, i) => ({ t, i })).filter(x => x.t);
+  if (!question) return toast('Enter the question');
+  if (keep.length < 2) return toast('Enter at least two options');
+  const ci = keep.findIndex(x => x.i === sel);
+  if (ci < 0) return toast('The correct option is empty. Tick an option that has text');
+  const obj = { id: editingId || uid(), question, options: keep.map(x => x.t), answer: ci, category: $('#fcat').value.trim(), explanation: $('#fexp').value.trim() };
+  if (editingId) {
+    const i = bank.findIndex(q => q.id === editingId);
+    if (i >= 0) bank[i] = obj;
+    toast('Question updated');
+  } else {
+    if (bank.some(q => keyOf(q.question) === keyOf(question))) return toast('This question is already in the bank');
+    bank.push(obj); toast('Question saved');
+  }
+  save(); refreshAll();
+  const wasEditing = !!editingId;
+  resetForm();
+  if (wasEditing) showView('bank'); else $('#fq').focus();
+}
+function editQ(id) {
+  const q = bank.find(x => x.id === id); if (!q) return;
+  showView('add'); showSub('single');
+  editingId = id;
+  $('#fq').value = q.question; $('#fcat').value = q.category || ''; $('#fexp').value = q.explanation || '';
+  $$('.fo').forEach((inp, i) => inp.value = q.options[i] || '');
+  $$('input[name=fc]')[q.answer].checked = true;
+  $('#formTitle').textContent = 'Edit question';
+  $('#saveQBtn').textContent = 'Update question';
+  $('#cancelEditBtn').hidden = false;
+}
+
+/* ============ bank view ============ */
+let bankLimit = 50;
+function categories() { return [...new Set(bank.map(q => q.category).filter(Boolean))].sort(); }
+function renderBank() {
+  const cats = categories();
+  const cur = $('#bCat').value;
+  $('#bCat').innerHTML = '<option value="">All categories</option>' + cats.map(c => '<option>' + esc(c) + '</option>').join('');
+  $('#bCat').value = cats.includes(cur) ? cur : '';
+  const s = keyOf($('#bSearch').value), c = $('#bCat').value;
+  const list = bank.filter(q => (!c || q.category === c) && (!s || keyOf(q.question + ' ' + q.options.join(' ')).includes(s)));
+  if (!bank.length) { $('#bankList').innerHTML = '<div class="card empty">No questions yet. Use <b>Add questions</b> to create some.</div>'; return; }
+  let html = '<p class="hint" style="margin-bottom:8px">' + list.length + ' of ' + bank.length + ' questions</p>';
+  html += list.slice(0, bankLimit).map(q =>
+    '<div class="pv"><div class="bankrow"><p>' + esc(q.question) + '</p><div class="btns"><button class="btn alt sm" onclick="editQ(\'' + q.id + '\')">Edit</button><button class="btn danger sm" onclick="delQ(\'' + q.id + '\')">Delete</button></div></div><ol>' +
+    q.options.map((o, j) => '<li class="' + (j === q.answer ? 'c' : '') + '">' + LETTERS[j] + ') ' + esc(o) + '</li>').join('') + '</ol>' +
+    (q.category ? '<div class="meta">' + esc(q.category) + '</div>' : '') + '</div>').join('');
+  if (list.length > bankLimit) html += '<div class="actions" style="justify-content:center"><button class="btn alt" onclick="bankLimit+=50;renderBank()">Show more</button></div>';
+  $('#bankList').innerHTML = html;
+}
+$('#bSearch').addEventListener('input', () => { bankLimit = 50; renderBank(); });
+$('#bCat').addEventListener('change', () => { bankLimit = 50; renderBank(); });
+function delQ(id) {
+  if (!confirm('Delete this question?')) return;
+  bank = bank.filter(q => q.id !== id); save(); refreshAll(); renderBank();
+}
+function clearAll() {
+  if (!bank.length) return;
+  if (!confirm('Delete all ' + bank.length + ' questions? Download the JSON first if you want a backup.')) return;
+  bank = []; save(); refreshAll(); renderBank();
+}
+function importJSONText(text) {
+  const box = $('#jsonMsg');
+  try {
+    let data = JSON.parse(text);
+    if (data && !Array.isArray(data)) data = data.questions || data.data || [data];
+    if (!Array.isArray(data)) throw new Error('Expected a list of questions');
+    const list = data.map(normalizeImport).filter(Boolean);
+    const bad = data.length - list.length;
+    const { added, dup } = addToBank(list);
+    box.innerHTML = '<div class="msg ok">' + added + ' imported' + (dup ? ', ' + dup + ' duplicate(s) skipped' : '') + (bad ? ', ' + bad + ' invalid item(s) ignored' : '') + '.</div>';
+    renderBank();
+  } catch (e) {
+    box.innerHTML = '<div class="msg err">Could not import: ' + esc(e.message) + '</div>';
+  }
+}
+$('#jsonFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => importJSONText(r.result);
+  r.readAsText(f); e.target.value = '';
+});
+
+/* ============ samples ============ */
+function loadSamples() {
+  const S = [
+    ['A straight line that touches a circle at only one point is called:', ['Chord', 'Tangent', 'Secant', 'Radius'], 1, 'Maths'],
+    ['What is the capital of Kerala?', ['Kochi', 'Kozhikode', 'Thiruvananthapuram', 'Thrissur'], 2, 'Kerala GK'],
+    ['Which is the longest river in Kerala?', ['Bharathapuzha', 'Periyar', 'Pamba', 'Chalakudy River'], 1, 'Kerala GK'],
+    ['The state of Kerala was formed on:', ['1 November 1956', '15 August 1947', '26 January 1950', '1 January 1957'], 0, 'Kerala GK'],
+    ['What is the sum of the angles of a triangle?', ['90°', '180°', '270°', '360°'], 1, 'Maths']
+  ].map(([question, options, answer, category]) => ({ id: uid(), question, options, answer, category, explanation: '' }));
+  const { added } = addToBank(S);
+  toast(added + ' sample questions added');
+}
+
+/* ============ mock test ============ */
+let test = null, timerId = null;
+
+function poolFor(cat) { return cat ? bank.filter(q => q.category === cat) : bank; }
+function refreshSetup() {
+  const cats = categories();
+  const cur = $('#sCat').value;
+  $('#sCat').innerHTML = '<option value="">All categories (' + bank.length + ')</option>' +
+    cats.map(c => '<option value="' + esc(c) + '">' + esc(c) + ' (' + poolFor(c).length + ')</option>').join('');
+  $('#sCat').value = cats.includes(cur) ? cur : '';
+  const n = poolFor($('#sCat').value).length;
+  $('#poolCount').textContent = bank.length;
+  $('#sAvail').textContent = n + ' available';
+  $('#sNum').max = n;
+  if (!$('#sNum').dataset.touched || Number($('#sNum').value) > n) $('#sNum').value = Math.min(20, n) || 1;
+  syncMinutes();
+  $('#emptyBank').hidden = bank.length > 0;
+  $('#setupForm').hidden = bank.length === 0;
+}
+function syncMinutes() {
+  if ($('#sMin').dataset.touched) return;
+  $('#sMin').value = Math.max(1, Math.ceil((Number($('#sNum').value) || 1) * 0.75));
+}
+$('#sCat').addEventListener('change', () => { $('#sNum').dataset.touched = ''; refreshSetup(); });
+$('#sNum').addEventListener('input', e => { e.target.dataset.touched = '1'; syncMinutes(); });
+$('#sMin').addEventListener('input', e => e.target.dataset.touched = '1');
+
+function startTest() {
+  const pool = poolFor($('#sCat').value);
+  let n = parseInt($('#sNum').value, 10);
+  if (!n || n < 1) return toast('Enter how many questions you want');
+  n = Math.min(n, pool.length);
+  const shufOpt = $('#sShufOpt').checked;
+  // fresh shuffle on every start
+  const picked = shuffle(pool).slice(0, n);
+  const items = picked.map(q => {
+    let opts = q.options.map((t, i) => ({ t, c: i === q.answer }));
+    if (shufOpt) opts = shuffle(opts);
+    return { q, opts, sel: null, flag: false };
+  });
+  const mins = Math.max(0, parseFloat($('#sMin').value) || 0);
+  test = { items, i: 0, neg: parseFloat($('#sNeg').value) || 0, endAt: mins ? Date.now() + mins * 60000 : 0, mins, startedAt: Date.now() };
+  $('#setup').hidden = true; $('#result').hidden = true; $('#quiz').hidden = false;
+  clearInterval(timerId);
+  if (test.endAt) { tick(); timerId = setInterval(tick, 500); } else $('#timer').textContent = 'No timer';
+  $('#timer').classList.remove('low');
+  renderQ(); window.scrollTo(0, 0);
+}
+function tick() {
+  const left = Math.max(0, test.endAt - Date.now());
+  const s = Math.ceil(left / 1000);
+  $('#timer').textContent = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+  $('#timer').classList.toggle('low', s <= 60);
+  if (left <= 0) { clearInterval(timerId); toast('Time is up. Test submitted.'); submitTest(true); }
+}
+function renderQ() {
+  const it = test.items[test.i];
+  $('#qProgress').textContent = 'Question ' + (test.i + 1) + ' of ' + test.items.length;
+  $('#qCard').innerHTML =
+    '<p class="qtext">' + esc(it.q.question) + '</p>' +
+    it.opts.map((o, j) => '<button class="opt' + (it.sel === j ? ' sel' : '') + '" onclick="pick(' + j + ')"><span class="l">' + LETTERS[j] + '</span><span>' + esc(o.t) + '</span></button>').join('') +
+    '<div class="actions">' +
+    '<button class="btn alt" onclick="go(-1)"' + (test.i === 0 ? ' disabled' : '') + '>Previous</button>' +
+    '<button class="btn alt" onclick="clearSel()">Clear answer</button>' +
+    '<button class="btn alt" onclick="toggleFlag()">' + (it.flag ? 'Unmark review' : 'Mark for review') + '</button>' +
+    (test.i < test.items.length - 1 ? '<button class="btn" onclick="go(1)">Next</button>' : '<button class="btn gold" onclick="submitTest(false)">Finish test</button>') +
+    '</div>';
+  $('#palette').innerHTML = test.items.map((x, k) =>
+    '<button class="' + [x.sel !== null ? 'ans' : '', x.flag ? 'flag' : '', k === test.i ? 'cur' : ''].join(' ') + '" onclick="jump(' + k + ')" aria-label="Go to question ' + (k + 1) + '">' + (k + 1) + '</button>').join('');
+}
+function pick(j) { test.items[test.i].sel = j; renderQ(); }
+function clearSel() { test.items[test.i].sel = null; renderQ(); }
+function toggleFlag() { const it = test.items[test.i]; it.flag = !it.flag; renderQ(); }
+function go(d) { test.i = Math.min(test.items.length - 1, Math.max(0, test.i + d)); renderQ(); window.scrollTo(0, 0); }
+function jump(k) { test.i = k; renderQ(); window.scrollTo(0, 0); }
+
+function submitTest(auto) {
+  if (!test) return;
+  if (!auto) {
+    const un = test.items.filter(x => x.sel === null).length;
+    const msg = un ? 'You have ' + un + ' unanswered question' + (un > 1 ? 's' : '') + '. Submit the test?' : 'Submit the test?';
+    if (!confirm(msg)) return;
+  }
+  clearInterval(timerId);
+  test.items.forEach(x => x.ok = x.sel !== null && x.opts[x.sel].c);
+  const total = test.items.length;
+  const right = test.items.filter(x => x.ok).length;
+  const wrong = test.items.filter(x => x.sel !== null && !x.ok).length;
+  const skipped = total - right - wrong;
+  const negMarks = wrong * test.neg;
+  const score = right - negMarks;
+  const fmt = n => (Math.round(n * 100) / 100).toString();
+  const used = Math.round((Date.now() - test.startedAt) / 1000);
+  test.review = 'all';
+  test.summary = { total, right, wrong, skipped, negMarks, score };
+  $('#quiz').hidden = true;
+  const r = $('#result'); r.hidden = false;
+  r.innerHTML =
+    '<div class="card"><h2>Your result</h2>' +
+    '<div class="score">' + fmt(score) + ' <span style="font-size:1.2rem;color:var(--muted);font-weight:500">/ ' + total + '</span></div>' +
+    '<div class="stats">' +
+    '<div class="stat"><b style="color:var(--ok)">' + right + '</b><span>Correct</span></div>' +
+    '<div class="stat"><b style="color:var(--red)">' + wrong + '</b><span>Wrong</span></div>' +
+    '<div class="stat"><b>' + skipped + '</b><span>Not answered</span></div>' +
+    '<div class="stat"><b>' + fmt(negMarks) + '</b><span>Marks deducted</span></div>' +
+    '<div class="stat"><b>' + Math.floor(used / 60) + 'm ' + (used % 60) + 's</b><span>Time taken</span></div>' +
+    '</div>' +
+    '<div class="actions"><button class="btn gold" onclick="startAgain()">Take a new shuffled test</button><button class="btn alt" onclick="backToSetup()">Change settings</button></div></div>' +
+    '<div class="sub-tabs" id="revTabs"><button class="on" data-f="all">All</button><button data-f="wrong">Wrong</button><button data-f="skipped">Not answered</button></div>' +
+    '<div id="reviewList"></div>';
+  $$('#revTabs button').forEach(b => b.onclick = () => { $$('#revTabs button').forEach(x => x.classList.toggle('on', x === b)); renderReview(b.dataset.f); });
+  renderReview('all');
+  window.scrollTo(0, 0);
+}
+function renderReview(f) {
+  const html = test.items.map((x, k) => {
+    const state = x.sel === null ? 'skipped' : x.ok ? 'right' : 'wrong';
+    if (f === 'wrong' && state !== 'wrong') return '';
+    if (f === 'skipped' && state !== 'skipped') return '';
+    const tag = state === 'right' ? '<span style="color:var(--ok);font-weight:700">Correct</span>' : state === 'wrong' ? '<span style="color:var(--red);font-weight:700">Wrong</span>' : '<span style="color:var(--muted);font-weight:700">Not answered</span>';
+    return '<div class="card"><div class="qno">Question ' + (k + 1) + ' · ' + tag + '</div><p class="qtext" style="margin-top:6px">' + esc(x.q.question) + '</p>' +
+      x.opts.map((o, j) => '<div class="opt static ' + (o.c ? 'right' : x.sel === j ? 'wrong' : '') + '"><span class="l">' + LETTERS[j] + '</span><span>' + esc(o.t) + '</span></div>').join('') +
+      (x.q.explanation ? '<div class="explain"><b>Explanation:</b> ' + esc(x.q.explanation) + '</div>' : '') + '</div>';
+  }).join('');
+  $('#reviewList').innerHTML = html || '<div class="card empty">Nothing to show here.</div>';
+}
+function startAgain() { startTest(); }
+function backToSetup() { $('#result').hidden = true; $('#setup').hidden = false; refreshSetup(); window.scrollTo(0, 0); }
+
+window.addEventListener('beforeunload', e => { if (test && !$('#quiz').hidden) { e.preventDefault(); e.returnValue = ''; } });
+
+/* ============ init ============ */
+function refreshAll() {
+  $('#navCount').textContent = bank.length;
+  $('#catList').innerHTML = categories().map(c => '<option value="' + esc(c) + '">').join('');
+  refreshSetup();
+}
+refreshAll();
+parseBulkUI();
+</script>
+</body>
+</html>
+
